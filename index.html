@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris Games Intecap</title>
+    <!-- 
+      p5.js es una biblioteca JavaScript que facilita la creación de gráficos y animaciones
+      en el navegador. Se utiliza para el manejo del canvas y la lógica del juego.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      Estilos CSS para el diseño de la página
+      Se utiliza Flexbox para centrar el canvas y crear un fondo degradado
+    -->
+    <style>
+      /*
+        El body usa Flexbox para centrar el canvas de juego
+        tanto vertical como horizontalmente en la ventana.
+        Se asegura que ocupe el 100% del alto y ancho de la pantalla.
+        El fondo usa un degradado que va desde un azul oscuro (#1a1a2e) 
+        hasta un azul más claro (#16213e) en diagonal.
+      */
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* Centra horizontalmente */
+        align-items: center; /* Centra verticalmente */
+        height: 100vh; /* Ocupa todo el alto de la ventana */
+        width: 100vw; /* Ocupa todo el ancho de la ventana */
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+      /*
+        El canvas tiene una sombra para resaltar el área de juego
+        y dar profundidad visual al tablero
+      */
+      canvas {
+        filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.4));
+        display: block;
+      }
+    </style>
+
+    <!-- 
+      Definición de constantes globales
+      Estas constantes afectan el comportamiento y apariencia del juego
+    -->
+    <script>
+      // Margen del tablero en píxeles para dar espacio alrededor del área de juego
+      const MARGE_TABLERO = 10;
+    </script>
+
+    <!-- 
+      Inclusión de los archivos JavaScript necesarios
+      Tablero.js: Maneja la lógica del tablero de juego
+      Tetrimino.js: Maneja la lógica de las piezas del Tetris
+    -->
+    <script src="Tablero.js"></script>
+    <script src="Tetrimino.js"></script>
+    <script>
+      /**
+       * Variables globales del juego
+       * Estas variables controlan el estado y comportamiento del juego
+       */
+      let regulador_velocidad_teclas = 0; // Controla la velocidad de respuesta de las teclas
+      let regulador_de_caida = 0; // Controla la velocidad de caída de las piezas
+      let lineas_hechas = 0; // Contador de líneas completadas
+      let velocidad_caida = 500; // Velocidad inicial de caída en milisegundos
+
+      /**
+       * Sistema de caída automática
+       * Controla la velocidad de caída de las piezas
+       * La velocidad aumenta gradualmente para aumentar la dificultad
+       * @function caidaAutomatica
+       */
+      function caidaAutomatica() {
+        if (millis() - regulador_de_caida > velocidad_caida) {
+          regulador_de_caida = millis();
+          tetrimino.moverAbajo();
+          tetrimino.espectro.actualizar();
+        }
+      }
+
+      /**
+       * Función setup de p5.js
+       * Se ejecuta una vez al inicio del juego
+       * Inicializa el canvas y las variables globales
+       * Define la configuración inicial del juego
+       */
+      function setup() {
+        createCanvas(900, 600);
+
+        /**
+         * Definición del mapeo base de tetriminos
+         * Cada tetrimino tiene:
+         * - color: Color de la pieza
+         * - mapa: Array de vectores que define la forma de la pieza
+         * Los vectores se crean usando createVector() de p5.js
+         */
+        tetriminosBase = {
+          Z: {
+            color: "red",
+            mapa: [
+              createVector(),
+              createVector(-1, -1),
+              createVector(0, -1),
+              createVector(1, 0),
+            ],
+          },
+          S: {
+            color: "lime",
+            mapa: [
+              createVector(),
+              createVector(1, -1),
+              createVector(0, -1),
+              createVector(-1, 0),
+            ],
+          },
+          J: {
+            color: "orange",
+            mapa: [
+              createVector(),
+              createVector(-1, 0),
+              createVector(-1, -1),
+              createVector(1, 0),
+            ],
+          },
+          L: {
+            color: "dodgerblue",
+            mapa: [
+              createVector(),
+              createVector(-1, 0),
+              createVector(1, -1),
+              createVector(1, 0),
+            ],
+          },
+          T: {
+            color: "magenta",
+            mapa: [
+              createVector(),
+              createVector(-1, 0),
+              createVector(1, 0),
+              createVector(0, -1),
+            ],
+          },
+          O: {
+            color: "yellow",
+            mapa: [
+              createVector(),
+              createVector(0, -1),
+              createVector(1, -1),
+              createVector(1, 0),
+            ],
+          },
+          I: {
+            color: "cyan",
+            mapa: [
+              createVector(),
+              createVector(-1, 0),
+              createVector(1, 0),
+              createVector(2, 0),
+            ],
+          },
+        };
+
+        // Inicialización de variables globales
+        // Importante: No usar let ni var para mantener el alcance global
+        tablero = new Tablero();
+        tetrimino = new Tetrimino();
+
+        // Ajuste del tamaño del canvas según las dimensiones del tablero
+        resizeCanvas(
+          tablero.ancho + 2 * MARGE_TABLERO,
+          tablero.alto + 2 * MARGE_TABLERO + 2 * tablero.lado_celda
+        );
+      }
+
+      /**
+       * Función draw de p5.js
+       * Se ejecuta continuamente para actualizar y dibujar el juego
+       * Esta función es el bucle principal del juego
+       */
+      function draw() {
+        clear();
+        caidaAutomatica();
+        dibujarPuntaje();
+        tablero.dibujar();
+        tetrimino.dibujar();
+        keyEventsTetris();
+      }
+
+      /**
+       * Dibuja el puntaje en la parte superior del canvas
+       * Muestra el número de líneas completadas
+       * Utiliza el sistema de coordenadas de p5.js
+       */
+      function dibujarPuntaje() {
+        push();
+        textSize(20);
+        strokeWeight(2);
+        stroke("black");
+        fill("white");
+        text(
+          "Lineas:" + lineas_hechas,
+          tablero.posicion.x,
+          tablero.posicion.y - tablero.lado_celda / 2
+        );
+        pop();
+      }
+
+      // Límite de velocidad para el control de teclas (en milisegundos)
+      let limite_regulador_velocidad_teclas = 100;
+
+      /**
+       * Maneja los eventos de teclado del juego
+       * Controla el movimiento y rotación de las piezas
+       * Implementa diferentes velocidades para cada acción
+       * Teclas utilizadas:
+       * - Flecha izquierda: Mover pieza a la izquierda
+       * - Flecha derecha: Mover pieza a la derecha
+       * - Flecha abajo: Acelerar caída
+       * - Flecha arriba: Rotar pieza
+       * - Espacio: Caída instantánea
+       */
+      function keyEventsTetris() {
+        if (
+          millis() - regulador_velocidad_teclas <
+          limite_regulador_velocidad_teclas
+        ) {
+          return;
+        }
+        limite_regulador_velocidad_teclas = 100;
+        regulador_velocidad_teclas = millis();
+
+        // Movimiento izquierda
+        if (keyIsDown(LEFT_ARROW)) {
+          tetrimino.moverIzquierda();
+          regulador_de_caida = millis();
+        }
+        // Movimiento derecha
+        if (keyIsDown(RIGHT_ARROW)) {
+          tetrimino.moverDerecha();
+          regulador_de_caida = millis();
+        }
+        // Movimiento abajo (caída rápida)
+        if (keyIsDown(DOWN_ARROW)) {
+          tetrimino.moverAbajo();
+          regulador_de_caida = millis();
+        }
+        // Rotación de la pieza
+        if (keyIsDown(UP_ARROW)) {
+          limite_regulador_velocidad_teclas = 150;
+          tetrimino.girar();
+          regulador_de_caida = millis();
+        }
+        // Caída instantánea (espacio)
+        if (keyIsDown(32)) {
+          limite_regulador_velocidad_teclas = 200;
+          tetrimino.ponerEnElFondo();
+          regulador_de_caida = millis();
+        }
+      }
+    </script>
+  </body>
+</html>
