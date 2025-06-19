@@ -31,15 +31,200 @@
         align-items: center; /* Centra verticalmente */
         height: 100vh; /* Ocupa todo el alto de la ventana */
         width: 100vw; /* Ocupa todo el ancho de la ventana */
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        background: linear-gradient(
+          135deg,
+          #0f0f23 0%,
+          #1a1a2e 25%,
+          #16213e 50%,
+          #0f3460 75%,
+          #533483 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        position: relative;
+        overflow: hidden;
       }
+
+      /* Efecto de estrellas que destellan */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          /* Estrellas pequeñas que destellan */ radial-gradient(
+            1px 1px at 20px 30px,
+            #fff,
+            transparent
+          ),
+          radial-gradient(1px 1px at 40px 70px, #fff, transparent),
+          radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+          radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+          radial-gradient(1px 1px at 160px 30px, #fff, transparent),
+          radial-gradient(1px 1px at 200px 60px, #fff, transparent),
+          radial-gradient(1px 1px at 250px 20px, #fff, transparent),
+          radial-gradient(1px 1px at 300px 90px, #fff, transparent),
+          radial-gradient(1px 1px at 350px 50px, #fff, transparent),
+          radial-gradient(1px 1px at 400px 10px, #fff, transparent),
+          radial-gradient(1px 1px at 450px 80px, #fff, transparent),
+          radial-gradient(1px 1px at 500px 30px, #fff, transparent),
+          radial-gradient(1px 1px at 550px 70px, #fff, transparent),
+          radial-gradient(1px 1px at 600px 15px, #fff, transparent),
+          radial-gradient(1px 1px at 650px 85px, #fff, transparent),
+          radial-gradient(1px 1px at 700px 45px, #fff, transparent),
+          radial-gradient(1px 1px at 750px 25px, #fff, transparent),
+          radial-gradient(1px 1px at 800px 75px, #fff, transparent),
+          radial-gradient(1px 1px at 850px 35px, #fff, transparent),
+          radial-gradient(1px 1px at 900px 65px, #fff, transparent),
+          /* Estrellas medianas con destellos */
+            radial-gradient(2px 2px at 50px 120px, #fff, transparent),
+          radial-gradient(2px 2px at 150px 180px, #fff, transparent),
+          radial-gradient(2px 2px at 250px 140px, #fff, transparent),
+          radial-gradient(2px 2px at 350px 200px, #fff, transparent),
+          radial-gradient(2px 2px at 450px 160px, #fff, transparent),
+          radial-gradient(2px 2px at 550px 220px, #fff, transparent),
+          radial-gradient(2px 2px at 650px 180px, #fff, transparent),
+          radial-gradient(2px 2px at 750px 240px, #fff, transparent),
+          /* Estrellas grandes brillantes */
+            radial-gradient(3px 3px at 100px 300px, #fff, transparent),
+          radial-gradient(3px 3px at 300px 350px, #fff, transparent),
+          radial-gradient(3px 3px at 500px 320px, #fff, transparent),
+          radial-gradient(3px 3px at 700px 380px, #fff, transparent),
+          /* Estrellas de colores */
+            radial-gradient(1.5px 1.5px at 120px 150px, #00ffff, transparent),
+          radial-gradient(1.5px 1.5px at 320px 250px, #ff69b4, transparent),
+          radial-gradient(1.5px 1.5px at 520px 180px, #ffff00, transparent),
+          radial-gradient(1.5px 1.5px at 720px 280px, #00ff00, transparent);
+        background-repeat: repeat;
+        background-size: 1000px 400px;
+        animation: starTwinkle 4s ease-in-out infinite;
+        opacity: 0.8;
+      }
+
+      /* Segunda capa de estrellas con timing diferente */
+      body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(
+            1px 1px at 30px 50px,
+            #fff,
+            transparent
+          ),
+          radial-gradient(1px 1px at 80px 100px, #fff, transparent),
+          radial-gradient(1px 1px at 130px 150px, #fff, transparent),
+          radial-gradient(1px 1px at 180px 200px, #fff, transparent),
+          radial-gradient(1px 1px at 230px 250px, #fff, transparent),
+          radial-gradient(1px 1px at 280px 300px, #fff, transparent),
+          radial-gradient(1px 1px at 330px 350px, #fff, transparent),
+          radial-gradient(1px 1px at 380px 400px, #fff, transparent),
+          radial-gradient(1px 1px at 430px 450px, #fff, transparent),
+          radial-gradient(1px 1px at 480px 500px, #fff, transparent),
+          radial-gradient(1px 1px at 530px 550px, #fff, transparent),
+          radial-gradient(1px 1px at 580px 600px, #fff, transparent),
+          radial-gradient(1px 1px at 630px 650px, #fff, transparent),
+          radial-gradient(1px 1px at 680px 700px, #fff, transparent),
+          radial-gradient(1px 1px at 730px 750px, #fff, transparent),
+          radial-gradient(1px 1px at 780px 800px, #fff, transparent),
+          radial-gradient(1px 1px at 830px 850px, #fff, transparent),
+          radial-gradient(1px 1px at 880px 900px, #fff, transparent),
+          radial-gradient(1px 1px at 930px 950px, #fff, transparent),
+          radial-gradient(1px 1px at 980px 1000px, #fff, transparent);
+        background-repeat: repeat;
+        background-size: 1000px 1000px;
+        animation: starTwinkle 6s ease-in-out infinite reverse;
+        opacity: 0.6;
+      }
+
+      @keyframes starTwinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(0.8);
+        }
+        25% {
+          opacity: 0.8;
+          transform: scale(1.2);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+        75% {
+          opacity: 0.6;
+          transform: scale(1.1);
+        }
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 100% 50%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        75% {
+          background-position: 0% 100%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
       /*
         El canvas tiene una sombra para resaltar el área de juego
         y dar profundidad visual al tablero
       */
       canvas {
-        filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.4));
+        filter: drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.3))
+          drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.6));
         display: block;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Efecto de brillo en los bordes del canvas */
+      canvas::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(
+          45deg,
+          #00ffff,
+          #ff00ff,
+          #ffff00,
+          #00ff00,
+          #00ffff
+        );
+        background-size: 400% 400%;
+        border-radius: 12px;
+        z-index: -1;
+        animation: borderGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes borderGlow {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
       }
     </style>
 
@@ -59,6 +244,59 @@
     -->
     <script src="Tablero.js"></script>
     <script src="Tetrimino.js"></script>
+
+    <!-- Sistema de Audio para el juego -->
+    <audio id="moveSound" preload="auto"></audio>
+    <audio id="rotateSound" preload="auto"></audio>
+    <audio id="dropSound" preload="auto"></audio>
+    <audio id="lineClearSound" preload="auto"></audio>
+    <audio id="tetrisSound" preload="auto"></audio>
+    <audio id="gameOverSound" preload="auto"></audio>
+
+    <!-- Música de fondo de Tetris -->
+    <audio id="tetrisMusic" preload="auto" loop>
+      <!-- Aquí puedes agregar tu archivo MP3 de Tetris -->
+      <!-- <source src="tetris_theme.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <!-- Botón para activar/desactivar sonido -->
+    <div
+      id="soundToggle"
+      style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+      "
+    >
+      🔊 Sonido: ON
+    </div>
+
+    <!-- Botón para activar/desactivar música -->
+    <div
+      id="musicToggle"
+      style="
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        z-index: 1000;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+      "
+    >
+      🎵 Música: ON
+    </div>
+
     <script>
       /**
        * Variables globales del juego
@@ -68,6 +306,204 @@
       let regulador_de_caida = 0; // Controla la velocidad de caída de las piezas
       let lineas_hechas = 0; // Contador de líneas completadas
       let velocidad_caida = 500; // Velocidad inicial de caída en milisegundos
+
+      /**
+       * Sistema de Audio
+       * Variables y funciones para manejar los sonidos del juego
+       */
+      let sonidoActivado = true; // Controla si el sonido está activado
+      let volumenSonido = 0.3; // Volumen general del juego (0.0 a 1.0)
+      let audioContext; // Contexto de Web Audio API
+      let musicaActivada = true; // Controla si la música de fondo está activada
+
+      /**
+       * Genera un sonido sintético usando Web Audio API
+       * @param {string} tipo - Tipo de sonido a generar
+       * @param {number} frecuencia - Frecuencia base del sonido
+       * @param {number} duracion - Duración en segundos
+       */
+      function generarSonido(tipo, frecuencia = 440, duracion = 0.1) {
+        if (!sonidoActivado || !audioContext) return;
+
+        const oscilador = audioContext.createOscillator();
+        const ganancia = audioContext.createGain();
+
+        oscilador.connect(ganancia);
+        ganancia.connect(audioContext.destination);
+
+        // Configurar el tipo de onda según el sonido
+        switch (tipo) {
+          case "move":
+            oscilador.type = "sine";
+            frecuencia = 800;
+            duracion = 0.05;
+            break;
+          case "rotate":
+            oscilador.type = "square";
+            frecuencia = 600;
+            duracion = 0.08;
+            break;
+          case "drop":
+            oscilador.type = "sawtooth";
+            frecuencia = 300;
+            duracion = 0.15;
+            break;
+          case "lineClear":
+            oscilador.type = "sine";
+            frecuencia = 800;
+            duracion = 0.2;
+            break;
+          case "tetris":
+            oscilador.type = "sine";
+            frecuencia = 1000;
+            duracion = 0.3;
+            break;
+          case "gameOver":
+            oscilador.type = "sawtooth";
+            frecuencia = 200;
+            duracion = 0.5;
+            break;
+        }
+
+        oscilador.frequency.setValueAtTime(
+          frecuencia,
+          audioContext.currentTime
+        );
+
+        // Configurar envolvente de volumen
+        ganancia.gain.setValueAtTime(0, audioContext.currentTime);
+        ganancia.gain.linearRampToValueAtTime(
+          volumenSonido * 0.3,
+          audioContext.currentTime + 0.01
+        );
+        ganancia.gain.exponentialRampToValueAtTime(
+          0.001,
+          audioContext.currentTime + duracion
+        );
+
+        // Sonidos especiales
+        if (tipo === "tetris") {
+          // Melodía ascendente para Tetris
+          oscilador.frequency.setValueAtTime(800, audioContext.currentTime);
+          oscilador.frequency.linearRampToValueAtTime(
+            1200,
+            audioContext.currentTime + 0.1
+          );
+          oscilador.frequency.linearRampToValueAtTime(
+            1600,
+            audioContext.currentTime + 0.2
+          );
+        } else if (tipo === "gameOver") {
+          // Melodía descendente para Game Over
+          oscilador.frequency.setValueAtTime(400, audioContext.currentTime);
+          oscilador.frequency.linearRampToValueAtTime(
+            300,
+            audioContext.currentTime + 0.1
+          );
+          oscilador.frequency.linearRampToValueAtTime(
+            200,
+            audioContext.currentTime + 0.2
+          );
+          oscilador.frequency.linearRampToValueAtTime(
+            100,
+            audioContext.currentTime + 0.3
+          );
+        } else if (tipo === "lineClear") {
+          // Melodía ascendente rápida
+          oscilador.frequency.setValueAtTime(600, audioContext.currentTime);
+          oscilador.frequency.linearRampToValueAtTime(
+            800,
+            audioContext.currentTime + 0.1
+          );
+        }
+
+        oscilador.start(audioContext.currentTime);
+        oscilador.stop(audioContext.currentTime + duracion);
+      }
+
+      /**
+       * Función para reproducir sonidos
+       * @param {string} tipoSonido - Tipo de sonido a reproducir
+       */
+      function reproducirSonido(tipoSonido) {
+        if (!sonidoActivado) return;
+
+        // Usar Web Audio API para sonidos sintéticos
+        generarSonido(tipoSonido);
+      }
+
+      /**
+       * Función para alternar el sonido on/off
+       */
+      function alternarSonido() {
+        sonidoActivado = !sonidoActivado;
+        const botonSonido = document.getElementById("soundToggle");
+        if (botonSonido) {
+          botonSonido.innerHTML = sonidoActivado
+            ? "🔊 Sonido: ON"
+            : "🔇 Sonido: OFF";
+        }
+      }
+
+      /**
+       * Carga un archivo de música MP3
+       * @param {string} url - URL del archivo MP3
+       */
+      function cargarMusica(url) {
+        const audio = document.getElementById("tetrisMusic");
+        if (audio) {
+          audio.src = url;
+          audio.volume = 0.3; // Volumen al 30%
+          audio.load();
+          console.log("🎵 Música cargada:", url);
+        }
+      }
+
+      /**
+       * Reproduce la música de fondo
+       */
+      function reproducirMusica() {
+        const audio = document.getElementById("tetrisMusic");
+        if (audio && musicaActivada) {
+          audio
+            .play()
+            .catch((e) => console.log("Error reproduciendo música:", e));
+        }
+      }
+
+      /**
+       * Pausa la música de fondo
+       */
+      function pausarMusica() {
+        const audio = document.getElementById("tetrisMusic");
+        if (audio) {
+          audio.pause();
+        }
+      }
+
+      /**
+       * Función para alternar la música de fondo
+       */
+      function alternarMusica() {
+        musicaActivada = !musicaActivada;
+        const botonMusica = document.getElementById("musicToggle");
+        if (botonMusica) {
+          botonMusica.innerHTML = musicaActivada
+            ? "🎵 Música: ON"
+            : "🔇 Música: OFF";
+        }
+
+        const audio = document.getElementById("tetrisMusic");
+        if (audio) {
+          if (musicaActivada) {
+            audio
+              .play()
+              .catch((e) => console.log("Error reproduciendo música:", e));
+          } else {
+            audio.pause();
+          }
+        }
+      }
 
       /**
        * Sistema de caída automática
@@ -175,6 +611,9 @@
           tablero.ancho + 2 * MARGE_TABLERO,
           tablero.alto + 2 * MARGE_TABLERO + 2 * tablero.lado_celda
         );
+
+        // Inicializar el sistema de audio
+        inicializarAudio();
       }
 
       /**
@@ -237,30 +676,81 @@
         // Movimiento izquierda
         if (keyIsDown(LEFT_ARROW)) {
           tetrimino.moverIzquierda();
+          reproducirSonido("move");
           regulador_de_caida = millis();
         }
         // Movimiento derecha
         if (keyIsDown(RIGHT_ARROW)) {
           tetrimino.moverDerecha();
+          reproducirSonido("move");
           regulador_de_caida = millis();
         }
         // Movimiento abajo (caída rápida)
         if (keyIsDown(DOWN_ARROW)) {
           tetrimino.moverAbajo();
+          reproducirSonido("drop");
           regulador_de_caida = millis();
         }
         // Rotación de la pieza
         if (keyIsDown(UP_ARROW)) {
           limite_regulador_velocidad_teclas = 150;
           tetrimino.girar();
+          reproducirSonido("rotate");
           regulador_de_caida = millis();
         }
         // Caída instantánea (espacio)
         if (keyIsDown(32)) {
           limite_regulador_velocidad_teclas = 200;
           tetrimino.ponerEnElFondo();
+          reproducirSonido("drop");
           regulador_de_caida = millis();
         }
+      }
+
+      /**
+       * Inicialización del sistema de audio
+       */
+      function inicializarAudio() {
+        // Configurar el botón de sonido
+        const botonSonido = document.getElementById("soundToggle");
+        if (botonSonido) {
+          botonSonido.addEventListener("click", alternarSonido);
+        }
+
+        // Configurar el botón de música
+        const botonMusica = document.getElementById("musicToggle");
+        if (botonMusica) {
+          botonMusica.addEventListener("click", alternarMusica);
+        }
+
+        // Inicializar Web Audio API para efectos de sonido
+        try {
+          audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)();
+          console.log("Sistema de efectos de sonido inicializado");
+        } catch (e) {
+          console.log("Error inicializando audio:", e);
+          sonidoActivado = false;
+        }
+
+        // Cargar música de fondo (descomenta y cambia la URL)
+        // cargarMusica('tetris_theme.mp3');
+        // reproducirMusica();
+
+        // Función para activar el contexto de audio en la primera interacción
+        function activarAudio() {
+          if (audioContext && audioContext.state === "suspended") {
+            audioContext.resume();
+            console.log("Audio activado por interacción del usuario");
+          }
+          // Remover el evento después de la primera activación
+          document.removeEventListener("click", activarAudio);
+          document.removeEventListener("keydown", activarAudio);
+        }
+
+        // Agregar eventos para activar el audio en la primera interacción
+        document.addEventListener("click", activarAudio);
+        document.addEventListener("keydown", activarAudio);
       }
     </script>
   </body>

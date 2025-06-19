@@ -37,6 +37,7 @@ class Tablero {
     for (const pmino of tetrimino.mapaTablero) {
       if (pmino.y < 0) {
         // Game Over si colisiona con la parte superior
+        reproducirSonido("gameOver");
         alert("Game Over!\nEl juego se reiniciará.");
         tablero = new Tablero();
         tetrimino = new Tetrimino();
@@ -99,18 +100,35 @@ class Tablero {
   eliminarLineas(lineas) {
     console.log("Líneas a eliminar:", lineas);
 
+    // Reproducir sonido según el número de líneas eliminadas
+    if (lineas.length === 4) {
+      reproducirSonido("tetris"); // Sonido especial para Tetris (4 líneas)
+    } else if (lineas.length >= 1) {
+      reproducirSonido("lineClear"); // Sonido para 1-3 líneas
+    }
+
     // Actualizar el contador de líneas
     lineas_hechas += lineas.length;
 
     // Ordenar las líneas de mayor a menor
     lineas.sort((a, b) => b - a);
 
+    // Contador de líneas eliminadas para ajustar los índices
+    let lineasEliminadas = 0;
+
     // Para cada línea a eliminar
-    for (const linea of lineas) {
-      console.log("Eliminando línea:", linea);
+    for (const lineaOriginal of lineas) {
+      // Ajustar el índice de la línea considerando las líneas ya eliminadas
+      const lineaAjustada = lineaOriginal - lineasEliminadas;
+      console.log(
+        "Eliminando línea:",
+        lineaOriginal,
+        "(ajustada a:",
+        lineaAjustada + ")"
+      );
 
       // Mover todas las filas superiores hacia abajo
-      for (let fila = linea; fila > 0; fila--) {
+      for (let fila = lineaAjustada; fila > 0; fila--) {
         // Copiar la fila superior a la fila actual
         for (let columna = 0; columna < this.columnas; columna++) {
           this.minosAlmacenados[fila][columna] =
@@ -122,6 +140,9 @@ class Tablero {
       for (let columna = 0; columna < this.columnas; columna++) {
         this.minosAlmacenados[0][columna] = "";
       }
+
+      // Incrementar el contador de líneas eliminadas
+      lineasEliminadas++;
     }
 
     // Verificar el estado final
