@@ -1,7 +1,9 @@
-/**
+/*
  * Tablero.js
- * Clase que representa el tablero del juego Tetris.
+ * Este archivo contiene la clase Tablero, que representa el tablero del juego Tetris.
  * Gestiona la matriz de juego, almacena las piezas y maneja la lógica del tablero.
+ *
+ * Si eres principiante, revisa los comentarios en cada función para entender cómo funciona el almacenamiento y la verificación de líneas.
  */
 class Tablero {
   /**

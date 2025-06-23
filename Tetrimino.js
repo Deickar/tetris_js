@@ -1,7 +1,9 @@
-/**
+/*
  * Tetrimino.js
- * Clase que representa una pieza del juego Tetris.
- * Gestiona el movimiento, rotación y dibujo de las piezas.
+ * Este archivo contiene la clase Tetrimino, que representa las piezas del juego Tetris.
+ * Gestiona el movimiento, la rotación y el dibujo de las piezas.
+ *
+ * Si eres principiante, revisa los comentarios en cada función para entender cómo se mueven y rotan las piezas.
  */
 class Tetrimino {
   /**
