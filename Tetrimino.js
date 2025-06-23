@@ -89,7 +89,8 @@ class Tetrimino {
    * Verifica colisiones antes de realizar la rotación
    */
   girar() {
-    let mapaAnterior = this.mapa;
+    // Copia profunda del mapa actual para evitar referencias compartidas
+    let mapaAnterior = this.mapa.map((p) => p.copy());
     this.mapa = this.mapa.map((pmino) => {
       return createVector(-pmino.y, pmino.x);
     });

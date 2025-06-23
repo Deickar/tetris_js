@@ -307,6 +307,12 @@
       let lineas_hechas = 0; // Contador de líneas completadas
       let velocidad_caida = 500; // Velocidad inicial de caída en milisegundos
 
+      // =============================
+      // Pantalla de inicio
+      // =============================
+      // Variable global para controlar si estamos en la pantalla de inicio
+      let enPantallaInicio = true;
+
       /**
        * Sistema de Audio
        * Variables y funciones para manejar los sonidos del juego
@@ -623,6 +629,13 @@
        */
       function draw() {
         clear();
+        // =============================
+        // Mostrar pantalla de inicio si corresponde
+        // =============================
+        if (enPantallaInicio) {
+          mostrarPantallaInicio();
+          return; // No ejecutar la lógica del juego hasta que se presione ENTER
+        }
         caidaAutomatica();
         dibujarPuntaje();
         tablero.dibujar();
@@ -677,13 +690,13 @@
         if (keyIsDown(LEFT_ARROW)) {
           tetrimino.moverIzquierda();
           reproducirSonido("move");
-          regulador_de_caida = millis();
+          //regulador_de_caida = millis();
         }
         // Movimiento derecha
         if (keyIsDown(RIGHT_ARROW)) {
           tetrimino.moverDerecha();
           reproducirSonido("move");
-          regulador_de_caida = millis();
+          //regulador_de_caida = millis();
         }
         // Movimiento abajo (caída rápida)
         if (keyIsDown(DOWN_ARROW)) {
@@ -696,7 +709,7 @@
           limite_regulador_velocidad_teclas = 150;
           tetrimino.girar();
           reproducirSonido("rotate");
-          regulador_de_caida = millis();
+          //regulador_de_caida = millis();
         }
         // Caída instantánea (espacio)
         if (keyIsDown(32)) {
@@ -733,24 +746,60 @@
           sonidoActivado = false;
         }
 
-        // Cargar música de fondo (descomenta y cambia la URL)
+        // Cargar música de fondo
         cargarMusica("/music/tetris_theme.mp3");
-        reproducirMusica();
+        // NO reproducir aquí directamente
 
-        // Función para activar el contexto de audio en la primera interacción
-        function activarAudio() {
+        // Función para activar el contexto de audio y la música en la primera interacción
+        function activarAudioYMusica() {
           if (audioContext && audioContext.state === "suspended") {
             audioContext.resume();
             console.log("Audio activado por interacción del usuario");
           }
+          reproducirMusica();
           // Remover el evento después de la primera activación
-          document.removeEventListener("click", activarAudio);
-          document.removeEventListener("keydown", activarAudio);
+          document.removeEventListener("click", activarAudioYMusica);
+          document.removeEventListener("keydown", activarAudioYMusica);
         }
 
-        // Agregar eventos para activar el audio en la primera interacción
-        document.addEventListener("click", activarAudio);
-        document.addEventListener("keydown", activarAudio);
+        // Agregar eventos para activar el audio y la música en la primera interacción
+        document.addEventListener("click", activarAudioYMusica);
+        document.addEventListener("keydown", activarAudioYMusica);
+      }
+
+      /**
+       * Dibuja la pantalla de inicio del juego
+       * Muestra el título, instrucciones y espera que el usuario presione ENTER
+       */
+      function mostrarPantallaInicio() {
+        push();
+        background(0, 0, 0, 180); // Fondo semitransparente para resaltar el mensaje
+        textAlign(CENTER, CENTER);
+        textSize(48);
+        fill("white");
+        stroke("black");
+        strokeWeight(4);
+        text("TETRIS", width / 2, height / 2 - 60);
+        textSize(24);
+        noStroke();
+        text("Presiona ENTER", width / 2, height / 2 + 10);
+        text("para comenzar", width / 2, height / 2 + 40);
+        textSize(16);
+        text("Controles: ← → ↓ ↑ y Espacio", width / 2, height / 2 + 70);
+        pop();
+      }
+
+      // =============================
+      // Evento para iniciar el juego desde la pantalla de inicio
+      // =============================
+      /**
+       * p5.js llama automáticamente a esta función cuando se presiona una tecla
+       * Si estamos en la pantalla de inicio y se presiona ENTER, comienza el juego
+       */
+      function keyPressed() {
+        if (enPantallaInicio && keyCode === ENTER) {
+          enPantallaInicio = false;
+        }
       }
     </script>
   </body>

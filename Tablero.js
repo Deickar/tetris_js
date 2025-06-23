@@ -110,40 +110,18 @@ class Tablero {
     // Actualizar el contador de líneas
     lineas_hechas += lineas.length;
 
-    // Ordenar las líneas de mayor a menor
-    lineas.sort((a, b) => b - a);
-
-    // Contador de líneas eliminadas para ajustar los índices
-    let lineasEliminadas = 0;
-
-    // Para cada línea a eliminar
-    for (const lineaOriginal of lineas) {
-      // Ajustar el índice de la línea considerando las líneas ya eliminadas
-      const lineaAjustada = lineaOriginal - lineasEliminadas;
-      console.log(
-        "Eliminando línea:",
-        lineaOriginal,
-        "(ajustada a:",
-        lineaAjustada + ")"
-      );
-
-      // Mover todas las filas superiores hacia abajo
-      for (let fila = lineaAjustada; fila > 0; fila--) {
-        // Copiar la fila superior a la fila actual
-        for (let columna = 0; columna < this.columnas; columna++) {
-          this.minosAlmacenados[fila][columna] =
-            this.minosAlmacenados[fila - 1][columna];
-        }
+    // Reconstruir el tablero solo con las filas no eliminadas
+    let nuevasFilas = [];
+    for (let fila = 0; fila < this.filas; fila++) {
+      if (!lineas.includes(fila)) {
+        nuevasFilas.push(this.minosAlmacenados[fila]);
       }
-
-      // Limpiar la fila superior
-      for (let columna = 0; columna < this.columnas; columna++) {
-        this.minosAlmacenados[0][columna] = "";
-      }
-
-      // Incrementar el contador de líneas eliminadas
-      lineasEliminadas++;
     }
+    // Rellenar con filas vacías arriba
+    while (nuevasFilas.length < this.filas) {
+      nuevasFilas.unshift(Array(this.columnas).fill(""));
+    }
+    this.minosAlmacenados = nuevasFilas;
 
     // Verificar el estado final
     console.log(

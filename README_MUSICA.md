@@ -75,3 +75,10 @@ reproducirMusica();
 - La música se activará automáticamente al hacer clic o presionar una tecla
 
 ¡Listo! Tu Tetris tendrá música de fondo profesional. 🎵
+
+## Mejoras recientes
+
+- Se corrigió un bug donde el tetrimino dejaba de caer al girar la pieza.
+- Ahora el juego cuenta con una pantalla de inicio que muestra el título, instrucciones y controles.
+- Mejoras visuales en la interfaz y en la experiencia de usuario.
+- El código está más comentado y es más fácil de entender y modificar.
