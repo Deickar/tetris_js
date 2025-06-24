@@ -9,12 +9,13 @@ class Tablero {
   /**
    * Constructor de la clase Tablero
    * Inicializa las dimensiones y propiedades del tablero de juego
+   * @param {number} lado_celda - Tamaño de cada celda en píxeles
    */
-  constructor() {
+  constructor(lado_celda = 25) {
     // Dimensiones del tablero
     this.columnas = 10;
     this.filas = 20;
-    this.lado_celda = 25;
+    this.lado_celda = lado_celda;
     this.ancho = this.columnas * this.lado_celda;
     this.alto = this.filas * this.lado_celda;
 
