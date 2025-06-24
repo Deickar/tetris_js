@@ -16,28 +16,42 @@
       Se utiliza Flexbox para centrar el canvas y crear un fondo degradado
     -->
     <style>
+      /*
+        =============================
+        CSS PRINCIPAL PARA TETRIS JS
+        =============================
+        Este CSS controla el diseño responsivo, el fondo animado, el canvas y los botones de UI.
+        Cada sección está comentada para facilitar la comprensión y personalización.
+      */
+
+      /*
+        El html y el body ocupan toda la pantalla y no permiten scroll.
+        Esto asegura que el juego y el fondo siempre llenen el viewport.
+      */
       html,
       body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden !important;
-        box-sizing: border-box;
+        height: 100%; /* Ocupa el 100% de la altura de la ventana */
+        width: 100%; /* Ocupa el 100% del ancho de la ventana */
+        margin: 0; /* Elimina márgenes por defecto */
+        padding: 0; /* Elimina padding por defecto */
+        overflow: hidden !important; /* Bloquea cualquier scroll */
+        box-sizing: border-box; /* Incluye el padding y border en el tamaño total */
       }
+
+      /*
+        BODY: Centra el canvas usando Flexbox y aplica el fondo animado.
+        - justify-content y align-items centran el contenido.
+        - height y width aseguran que el fondo cubra toda la pantalla.
+        - background y animation crean el degradado animado.
+        - position: relative permite usar ::before y ::after para las estrellas.
+        - overflow: hidden asegura que nada se salga del viewport.
+      */
       body {
-        /*
-          El body usa Flexbox para centrar el canvas de juego
-          tanto vertical como horizontalmente en la ventana.
-          Se asegura que ocupe el 100% del alto y ancho de la pantalla.
-          El fondo usa un degradado que va desde un azul oscuro (#1a1a2e) 
-          hasta un azul más claro (#16213e) en diagonal.
-        */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        width: 100vw;
+        display: flex; /* Flexbox para centrar el canvas */
+        justify-content: center; /* Centra horizontalmente */
+        align-items: center; /* Centra verticalmente */
+        height: 100vh; /* 100% de la altura de la ventana */
+        width: 100vw; /* 100% del ancho de la ventana */
         background: linear-gradient(
           135deg,
           #0f0f23 0%,
@@ -45,14 +59,22 @@
           #16213e 50%,
           #0f3460 75%,
           #533483 100%
-        );
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        position: relative;
-        overflow: hidden !important;
+        ); /* Degradado de fondo */
+        background-size: 400% 400%; /* Tamaño grande para animación */
+        animation: gradient 15s ease infinite; /* Anima el fondo */
+        position: relative; /* Para usar ::before y ::after */
+        overflow: hidden !important; /* Bloquea scroll extra */
       }
 
-      /* Efecto de estrellas que destellan */
+      /*
+        =============================
+        FONDO ANIMADO DE ESTRELLAS
+        =============================
+        Se usan ::before y ::after para crear dos capas de estrellas animadas.
+        Cada capa tiene diferentes posiciones, tamaños y animaciones para dar profundidad.
+      */
+
+      /* Primera capa de estrellas (más brillante y rápida) */
       body::before {
         content: "";
         position: absolute;
@@ -60,6 +82,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+        /* Varias estrellas de diferentes tamaños y colores */
         background-image: 
           /* Estrellas pequeñas que destellan */ radial-gradient(
             1px 1px at 20px 30px,
@@ -110,7 +133,7 @@
         opacity: 0.8;
       }
 
-      /* Segunda capa de estrellas con timing diferente */
+      /* Segunda capa de estrellas (más suave y lenta, para profundidad) */
       body::after {
         content: "";
         position: absolute;
@@ -118,6 +141,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+        /* Más estrellas, diferentes posiciones */
         background-image: radial-gradient(
             1px 1px at 30px 50px,
             #fff,
@@ -148,6 +172,10 @@
         opacity: 0.6;
       }
 
+      /*
+        Animación de parpadeo de las estrellas.
+        Cambia la opacidad y el tamaño para simular destellos.
+      */
       @keyframes starTwinkle {
         0%,
         100% {
@@ -168,6 +196,10 @@
         }
       }
 
+      /*
+        Animación del degradado de fondo.
+        Mueve el fondo para dar sensación de movimiento.
+      */
       @keyframes gradient {
         0% {
           background-position: 0% 50%;
@@ -187,22 +219,28 @@
       }
 
       /*
-        El canvas tiene una sombra para resaltar el área de juego
-        y dar profundidad visual al tablero
+        =============================
+        CANVAS DEL JUEGO
+        =============================
+        El canvas tiene sombra, borde y fondo translúcido para resaltar el área de juego.
+        El filtro drop-shadow da profundidad visual.
       */
       canvas {
         filter: drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.3))
-          drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.6));
+          drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.6)); /* Sombra doble */
         display: block;
-        border-radius: 10px;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(5px);
+        border-radius: 10px; /* Bordes redondeados */
+        border: 2px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+        background: rgba(0, 0, 0, 0.2); /* Fondo translúcido */
+        backdrop-filter: blur(5px); /* Difumina el fondo detrás del canvas */
         position: relative;
-        z-index: 10;
+        z-index: 10; /* Sobre el fondo, debajo de los botones */
       }
 
-      /* Efecto de brillo en los bordes del canvas */
+      /*
+        Efecto de brillo animado en los bordes del canvas.
+        Usa un gradiente animado para dar un efecto de neón.
+      */
       canvas::before {
         content: "";
         position: absolute;
@@ -224,6 +262,9 @@
         animation: borderGlow 3s ease-in-out infinite;
       }
 
+      /*
+        Animación del brillo de los bordes del canvas.
+      */
       @keyframes borderGlow {
         0%,
         100% {
@@ -234,37 +275,44 @@
         }
       }
 
-      /* Capa de UI para que los botones no se vean afectados por el fondo */
+      /*
+        =============================
+        BOTONES DE UI (SONIDO Y MÚSICA)
+        =============================
+        Los botones están en una capa fija (#uiLayer) para que no se vean afectados por el fondo.
+        .ui-btn define el estilo visual y la interacción.
+        Media queries los hacen más pequeños en móviles.
+      */
       #uiLayer {
-        position: fixed;
+        position: fixed; /* Siempre en la misma posición en pantalla */
         top: 0;
         right: 0;
         width: auto;
-        z-index: 2000;
+        z-index: 2000; /* Sobre el canvas y el fondo */
         pointer-events: none; /* Solo los hijos reciben eventos */
       }
       /* Botones de UI */
       .ui-btn {
-        position: relative;
-        margin: 20px 20px 0 0;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 12px 18px;
-        border-radius: 8px;
+        position: relative; /* Para stacking context */
+        margin: 20px 20px 0 0; /* Separación de los bordes */
+        background: rgba(0, 0, 0, 0.7); /* Fondo oscuro translúcido */
+        color: white; /* Texto blanco */
+        padding: 12px 18px; /* Espaciado interno */
+        border-radius: 8px; /* Bordes redondeados */
         font-family: Arial, sans-serif;
         font-size: 18px;
-        z-index: 2100;
-        cursor: pointer;
-        pointer-events: auto;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        user-select: none;
-        transition: background 0.2s, transform 0.2s;
+        z-index: 2100; /* Sobre el fondo y el canvas */
+        cursor: pointer; /* Cursor de mano */
+        pointer-events: auto; /* Permite clicks */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+        user-select: none; /* No permite seleccionar el texto */
+        transition: background 0.2s, transform 0.2s; /* Animación al presionar */
       }
       .ui-btn:active {
-        background: rgba(0, 0, 0, 0.9);
-        transform: scale(0.97);
+        background: rgba(0, 0, 0, 0.9); /* Más oscuro al presionar */
+        transform: scale(0.97); /* Efecto de presión */
       }
-      /* Responsive para móviles */
+      /* Responsive para móviles: botones más pequeños y menos margen */
       @media (max-width: 600px) {
         .ui-btn {
           font-size: 15px;
